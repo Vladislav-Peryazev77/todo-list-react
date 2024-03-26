@@ -1,0 +1,13 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+
+  .taskDone {
+    text-decoration: line-through;
+  }
+}
+
+li {
+  border: 1px solid grey;
+  padding: 5px;
+}

@@ -1,0 +1,21 @@
+.todoList {
+  display: flex;
+  width: 100vw;
+  height: 100dvh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 40%;
+    list-style: none;
+  }
+
+  .wrapper {
+    display: flex;
+    gap: 15px;
+  }
+}
