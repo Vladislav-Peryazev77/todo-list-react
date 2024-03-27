@@ -1,3 +1,5 @@
 export const getApiData = async (url) => {
-  fetch(url).then((response) => response.json());
+  return fetch(`https://jsonplaceholder.typicode.com${url}`).then((response) =>
+    response.json()
+  );
 };

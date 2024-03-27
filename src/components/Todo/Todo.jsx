@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Todo.module.scss";
 import { TaskInput } from "../TaskInput/TaskInput";
 import { TaskItem } from "../TaskItem";
-// import { getTodos } from "../../api/getTodos";
+import { getTodos } from "../../api/getTodos";
 
 export const Todo = () => {
   const [toDoList, setToDoList] = useState(
@@ -10,16 +10,10 @@ export const Todo = () => {
     []
   );
 
-  const getApiData = async () => {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/todos/"
-    ).then((response) => response.json());
-
-    setToDoList(response);
-  };
-
   useEffect(() => {
-    getApiData();
+    getTodos()
+      .then((data) => setToDoList(data))
+      .catch((error) => setToDoList([]));
   }, []);
 
   const handleTaskAdd = (title) => {

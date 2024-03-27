@@ -1,5 +1,3 @@
 import { getApiData } from "./api";
 
-export const getTodos = () => {
-  getApiData("https://jsonplaceholder.typicode.com/todos");
-};
+export const getTodos = async () => getApiData("/todos");
