@@ -1,29 +1,29 @@
 import React, { useState } from "react";
 import styles from "./TaskInput.module.scss";
 
-export const TaskInput = ({ addTask }) => {
-  const [task, setTask] = useState("");
+export const TaskInput = ({ onAddTask }) => {
+  const [taskInputValue, setTaskInputValue] = useState("");
 
-  const handleInputValue = (event) => {
-    setTask(event.target.value);
+  const handleInputValueChange = (event) => {
+    setTaskInputValue(event.target.value);
   };
 
   const handleAddTask = (event) => {
     event.preventDefault();
-    if (task.trim() === "") {
+    if (taskInputValue.trim() === "") {
       return;
     }
-    addTask(task);
-    setTask("");
+    onAddTask(taskInputValue);
+    setTaskInputValue("");
   };
 
   return (
     <form action="" className={styles.form} onSubmit={handleAddTask}>
       <input
         type="text"
-        value={task}
+        value={taskInputValue}
         placeholder="Todo"
-        onChange={handleInputValue}
+        onChange={handleInputValueChange}
       />
       <button>+</button>
     </form>

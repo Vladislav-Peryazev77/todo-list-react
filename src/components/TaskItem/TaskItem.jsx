@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./TaskItem.module.scss";
 
-export const TaskItem = ({ task, deleteTask }) => {
-  const [isDone, setIsDone] = useState(false);
-
-  const taskClassname = isDone ? styles.taskDone : "";
-
-  const handleTaskDone = () => {
-    setIsDone((prevState) => !prevState);
-  };
+export const TaskItem = ({ task, onDeleteTask, onChange }) => {
+  const taskClassname = task.checked ? styles.taskDone : "";
 
   return (
     <li>
       <div className={styles.item}>
-        <input type="checkbox" onChange={handleTaskDone} />
+        <input
+          type="checkbox"
+          checked={task.checked}
+          onChange={() => onChange(task.id)}
+        />
         <span className={taskClassname}>{task.taskName}</span>
-        <button onClick={() => deleteTask(task.taskName)}>-</button>
+        <button onClick={() => onDeleteTask(task.id)}>-</button>
       </div>
     </li>
   );
