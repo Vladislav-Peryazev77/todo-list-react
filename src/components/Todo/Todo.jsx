@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Todo.module.scss";
 import { TaskInput } from "../TaskInput/TaskInput";
 import { TaskItem } from "../TaskItem";
@@ -8,35 +8,47 @@ export const Todo = () => {
     JSON.parse(localStorage.getItem("todolist")) || []
   );
 
-  const onAddTask = (taskName) => {
+  useEffect(() => {
+    localStorage.setItem("todolist", JSON.stringify(toDoList));
+  }, [toDoList]);
+
+  const handleTaskAdd = (taskName) => {
     const newTask = { taskName, checked: false, id: Date.now() };
     setToDoList([...toDoList, newTask]);
   };
 
   const handleTaskStatusChange = (checkedTaskId) => {
-    setToDoList((prevToDoList) =>
-      prevToDoList.map((task) =>
-        task.id === checkedTaskId ? { ...task, checked: !task.checked } : task
-      )
-    );
+    const foundIndex = toDoList.findIndex((task) => task.id === checkedTaskId);
+
+    if (foundIndex === -1) {
+      return;
+    }
+
+    setToDoList((prevState) => {
+      return [
+        ...prevState,
+        (prevState[foundIndex] = {
+          ...prevState[foundIndex],
+          checked: !prevState[foundIndex].checked,
+        }),
+      ];
+    });
   };
 
-  const deleteTask = (deleteTaskId) => {
+  const handleDeleteTask = (deleteTaskId) => {
     setToDoList(toDoList.filter((task) => task.id !== deleteTaskId));
   };
 
-  localStorage.setItem("todolist", JSON.stringify(toDoList));
-
   return (
     <div className={styles.todoList}>
-      <TaskInput onAddTask={onAddTask} />
+      <TaskInput onAddTask={handleTaskAdd} />
       <ul className={styles.todos}>
         {toDoList.map((task, key) => (
           <TaskItem
             task={task}
             key={key}
             onChange={handleTaskStatusChange}
-            deleteTask={deleteTask}
+            onDeleteTask={handleDeleteTask}
           />
         ))}
       </ul>

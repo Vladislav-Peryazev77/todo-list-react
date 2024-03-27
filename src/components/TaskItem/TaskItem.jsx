@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./TaskItem.module.scss";
 
-export const TaskItem = ({ task, deleteTask, onChange }) => {
+export const TaskItem = ({ task, onDeleteTask, onChange }) => {
   const taskClassname = task.checked ? styles.taskDone : "";
 
   return (
@@ -13,7 +13,7 @@ export const TaskItem = ({ task, deleteTask, onChange }) => {
           onChange={() => onChange(task.id)}
         />
         <span className={taskClassname}>{task.taskName}</span>
-        <button onClick={() => deleteTask(task.id)}>-</button>
+        <button onClick={() => onDeleteTask(task.id)}>-</button>
       </div>
     </li>
   );
