@@ -25,13 +25,13 @@ export const Todo = () => {
     }
 
     setToDoList((prevState) => {
-      return [
-        ...prevState,
-        (prevState[foundIndex] = {
-          ...prevState[foundIndex],
-          checked: !prevState[foundIndex].checked,
-        }),
-      ];
+      const newTodoList = [...prevState];
+      newTodoList[foundIndex] = {
+        ...newTodoList[foundIndex],
+        checked: !newTodoList[foundIndex].checked,
+      };
+
+      return newTodoList;
     });
   };
 
