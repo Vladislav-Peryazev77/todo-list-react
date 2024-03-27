@@ -2,18 +2,28 @@ import React, { useState, useEffect } from "react";
 import styles from "./Todo.module.scss";
 import { TaskInput } from "../TaskInput/TaskInput";
 import { TaskItem } from "../TaskItem";
+// import { getTodos } from "../../api/getTodos";
 
 export const Todo = () => {
   const [toDoList, setToDoList] = useState(
-    JSON.parse(localStorage.getItem("todolist")) || []
+    // JSON.parse(localStorage.getItem("todolist")) || []
+    []
   );
 
-  useEffect(() => {
-    localStorage.setItem("todolist", JSON.stringify(toDoList));
-  }, [toDoList]);
+  const getApiData = async () => {
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/todos/"
+    ).then((response) => response.json());
 
-  const handleTaskAdd = (taskName) => {
-    const newTask = { taskName, checked: false, id: Date.now() };
+    setToDoList(response);
+  };
+
+  useEffect(() => {
+    getApiData();
+  }, []);
+
+  const handleTaskAdd = (title) => {
+    const newTask = { title, checked: false, id: Date.now() };
     setToDoList([...toDoList, newTask]);
   };
 
@@ -28,7 +38,7 @@ export const Todo = () => {
       const newTodoList = [...prevState];
       newTodoList[foundIndex] = {
         ...newTodoList[foundIndex],
-        checked: !newTodoList[foundIndex].checked,
+        completed: !newTodoList[foundIndex].completed,
       };
 
       return newTodoList;
